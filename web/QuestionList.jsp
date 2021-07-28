@@ -1,0 +1,76 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+        <%@page import="model.QuestionsDao"%>
+<%@page import="db.*"%>
+<%@page import="java.util.ArrayList"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <meta charset="ISO-8859-1">
+    <style>
+        ul.navbar-nav a:hover{
+            color: white !important;
+        }
+    </style>
+    <title>Manage Questions</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <a class="navbar-brand" href="Home.jsp"><strong>Quick Quizzz</strong></a>
+        <ul class="navbar-nav">
+          <li class="nav-item"> <a class="nav-link" href="AdminPanel.jsp">Admin Panel</a></li>
+          <li class="nav-item"> <a class="nav-link" href="StudentList.jsp">Manage Student</a></li>
+          <li class="nav-item"> <a class="nav-link" href="InstructionList.jsp">Manage Instruction</a></li>
+          <li class="nav-item"> <a class="nav-link active" href="QuestionList.jsp">Manage Questions</a></li>
+          <li class="nav-item"> <a class="nav-link" href="ScheduleExam.jsp">Manage Exam</a></li>
+
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a class="nav-link" href="AdminPanel.jsp"><i class="fas fa-user"></i> <%out.println(session.getAttribute("username")); %></a></li>
+          <li class="nav-item"><a class="nav-link" href="oes.controller.LogoutAdmin"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+        </ul>
+    </nav>
+    <h2 style="text-align: center; padding-top: 35px"> <font  color ="black">List of Questions</font></h2><table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover">
+        <tr tr class="table-dark">
+            <th>sl no.</th>
+            <th>Question</th>
+            <th>Option A </th>
+            <th>Option B </th>
+            <th>Option C </th>
+            <th>Option D </th>
+            <th>Correct Answer</th>
+            <th>Marks </th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+       <%
+        int i = 0;
+        ArrayList<Questions> allQuestions = QuestionsDao.getAllRecords();
+        for(Questions e : allQuestions)
+        {   
+         %>
+        <tr>
+            <td><%=i++%></td>
+            <td><%=e.getQuestion() %></td>
+            <td><%=e.getA()%></td>
+            <td><%=e.getB()%></td>
+            <td><%=e.getC()%></td>
+            <td><%=e.getD()%></td>
+            <td><%=e.getAnswer()%></td>
+            <td><%=e.getMarks()%></td>
+            <td><a href="updatequestion.jsp?ques=<%=e.getQuestion()%>">Update</a></td>
+            <td><a href="deletequestion.jsp?ques=<%=e.getQuestion()%>">Delete</a></td>
+        </tr>
+         <%
+         }
+         %>
+        <tr>
+            <th colspan="10"><center><input type="button" value="Add Question" class="btn btn-outline-success" onclick="location.href='AddQuestion.jsp'"></center></th>
+        </tr>
+   </table>
+</body>
+</html>
